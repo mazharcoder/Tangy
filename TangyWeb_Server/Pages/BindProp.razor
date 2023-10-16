@@ -2,15 +2,19 @@
 @using Tangy_Models.LearnBlazorModels
 
 <h3>Product</h3>
-Name: @Product.Name
-IsActive: @Product.IsActive
+Name: @_product.Name <br/>
+IsActive: @_product.IsActive <br/>
+Price: @_product.Price <br/>
+
+<input type="number" @bind-value="@_product.Price" @bind-value:event="oninput"/>
 
 @code {
 
-  Demo_Product Product = new()
+  Demo_Product _product = new()
   {
     Id = 1,
     Name = "Rose Candle",
+    Price = 10.99,
     IsActive = true
   };
 
