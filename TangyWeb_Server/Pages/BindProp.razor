@@ -5,6 +5,11 @@
 Name: @_product.Name <br/>
 IsActive: @_product.IsActive <br/>
 Price: @_product.Price <br/>
+<br/>
+<br/>
+Active: <input type="checkbox" @bind-value="_product.IsActive" checked="@(_product.IsActive ? "checked" : null)"/> 
+<br/>
+This product is: @(_product.IsActive ? "active" : "in-active") <br/>
 
 <input type="number" @bind-value="@_product.Price" @bind-value:event="oninput"/>
 
