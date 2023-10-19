@@ -8,7 +8,7 @@
 </_ChildComponent>
 
 <p><b>@messageText</b></p>
-<_AnotherChildComponent InputAttributes="InputAttributesFromParent"></_AnotherChildComponent>
+<_AnotherChildComponent placeholder="Placeholder from Parent"></_AnotherChildComponent>
 
 @* <_ChildComponent Title="This is second child component"
                  OnButtonClick="ShowMessage">
@@ -16,13 +16,6 @@
 </_ChildComponent> *@
 
 @code {
-  public Dictionary<string, object> InputAttributesFromParent { get; set; } = new Dictionary<string, object>
-  {
-    {"required", "required"},
-    {"placeholder", "Initial Text"},
-    {"maxlength", 10}
-  };
-
   public string messageText = "";
 
   private void ShowMessage()
