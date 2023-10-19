@@ -3,15 +3,16 @@
 <h3>Parent Child Relation</h3>
 
 <_ChildComponent Title="This title is passed as parameter from Parent Component">
-  Render Fragment from parent
+  <ChildContent>Render Fragment from parent</ChildContent>
+  <DangerChildContent>This is danger render fragment</DangerChildContent>
 </_ChildComponent>
 
 <p><b>@messageText</b></p>
 
-<_ChildComponent Title="This is second child component"
+@* <_ChildComponent Title="This is second child component"
                  OnButtonClick="ShowMessage">
 
-</_ChildComponent>
+</_ChildComponent> *@
 
 @code {
   public string messageText = "";
