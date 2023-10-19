@@ -4,6 +4,7 @@
   <h4 class="text-dark">Product - @Product.Id</h4>
   <p>Add to Favorite <input type="checkbox" @onchange="FavoriteUpdated" /></p>
   <p>Name - @Product.Name</p>
+  <p>@ChildContent</p>
   <p>Show Properties - <input type="checkbox" @bind="Product.IsActive" /></p>
   @if (Product.IsActive)
   {
@@ -18,6 +19,9 @@
 </div>
 
 @code {
+  [Parameter]
+  public RenderFragment ChildContent { get; set; }
+
   [Parameter]
   public Demo_Product Product { get; set; }
 
