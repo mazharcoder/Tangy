@@ -11,12 +11,29 @@
 </div>
 
 <div class="row">
-  <button class="btn btn-success" @onclick="ToastrSuccess">
-    Toastr Success
-  </button>
-  <button class="btn btn-danger" @onclick="ToastrFailure">
-    Toastr Failure
-  </button>
+  <div>
+    <button class="btn btn-success" @onclick="ToastrSuccess">
+        Toastr Success
+      </button>
+  </div>
+  <div>
+     <button class="btn btn-danger" @onclick="ToastrFailure">
+        Toastr Failure
+      </button>
+  </div>
+</div>
+
+<div class="row">
+  <div>
+    <button class="btn btn-success" @onclick="SweetAlertSuccess">
+        Sweet Alert Success
+      </button>
+  </div>
+  <div>
+     <button class="btn btn-danger" @onclick="SweetAlertFailure">
+        Sweet Alert Failure
+      </button>
+  </div>
 </div>
 
 <div class="row">
@@ -34,19 +51,29 @@
 
   private string ConfirmMessage = "Are you sure you want to click?";
   private bool ConfirmResult { get; set; }
-  
+
   private async Task TestConfirmBox()
   {
     ConfirmResult = await _JsRuntime.InvokeAsync<bool>("confirm", ConfirmMessage);
   }
-  
+
   private async Task ToastrSuccess()
   {
     await _JsRuntime.ToastrSuccess("Operation Successful");
   }
-  
+
   private async Task ToastrFailure()
   {
     await _JsRuntime.ToastrFailure("Operation Failed");
+  }
+
+  private async Task SweetAlertSuccess()
+  {
+    await _JsRuntime.SweetAlertSuccess("Good job!", "You clicked the button!");
+  }
+  
+  private async Task SweetAlertFailure()
+  {
+    await _JsRuntime.SweetAlertFailure("Bad job!", "You clicked the button!");
   }
 }
