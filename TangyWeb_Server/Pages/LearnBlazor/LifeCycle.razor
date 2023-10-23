@@ -49,4 +49,23 @@
     await Task.Delay(1000);
   }
 
+  protected override void OnAfterRender(bool firstRender)
+  {
+    if (firstRender)
+    {
+      currentCount = 111;
+    }
+    else
+    {
+      currentCount = 999;
+    }
+    EventTypes.Add("OnAfterRender is callded");
+  }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    EventTypes.Add("OnAfterRenderAsync is callded");
+    await Task.Delay(1000);
+  }
+
 }
