@@ -9,10 +9,18 @@
 
 @code {
   List<string> EventTypes = new List<string>();
+  
+  [Parameter]
+  public int CountValue { get; set; }
 
   protected override void OnInitialized()
   {
     EventTypes.Add("Child - OnInitialized is callded");
+  }
+
+  protected override void OnParametersSet()
+  {
+    EventTypes.Add("Child - OnParametersSet is callded");
   }
 
 }
