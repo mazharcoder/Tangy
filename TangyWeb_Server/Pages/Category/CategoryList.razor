@@ -1,0 +1,74 @@
+﻿@page "/category"
+@inject ICategoryRepository _categoryRepository
+
+<div class="row mt-4">
+  <div class="col-6">
+    <h4 class="card-title text-primary">Category</h4>
+  </div>
+  <div class="col-4 offset-2">
+    <a href="category/create" class="btn btn-primary form-control">Add New Category</a>
+  </div>
+  <div class="col-12">
+    @if (Categories.Any())
+    {
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach (var category in Categories)
+          {
+            <tr>
+              <td>@category.Name</td>
+              <td>
+                <NavLink href="@($"category/edit/{category.Id}")" class="btn btn-primary">Edit</NavLink>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+    else
+    {
+      if (IsLoading)
+      {
+        <div class="text-center">
+          <img src="/images/loading.gif" />
+        </div>
+      }
+      else
+      {
+        <p>No Records Found...</p>
+      }
+    }
+  </div>
+</div>
+
+
+
+@code {
+  private List<CategoryDto> Categories { get; set; } = new List<CategoryDto>();
+  private bool IsLoading { get; set; } = true;
+
+  protected override async Task OnInitializedAsync()
+  {
+    // instead of making load categories function async and have it await here
+    // this will result in application to hold and wait for data
+    // instead we called Task.Run and provided the load categories function
+    // this will load the page but will load the categories behind the scenes
+    // and whenever the data is available it will show in the page
+    await Task.Run(LoadCategories);
+  }
+
+  // separate function for getting load categories
+  // this is not by default async and await
+  // as this will be added to backgroun operation
+  private void LoadCategories()
+  {
+    Categories = _categoryRepository.GetAll();
+    IsLoading = false;
+  }
+}
