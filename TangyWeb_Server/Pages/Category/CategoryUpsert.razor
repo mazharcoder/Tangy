@@ -35,7 +35,7 @@
   [Parameter]
   public int Id { get; set; }
 
-  private CategoryDto Category { get; set; } = new CategoryDto();
+  private CategoryDto Category { get; set; } = new();
   private string Title { get; set; } = "Create";
   private bool IsLoading { get; set; } = true;
 
@@ -48,7 +48,7 @@
     // and whenever the data is available it will show in the page
     if (Id == 0)
     {
-      // create
+      IsLoading = false;
     }
     else
     {

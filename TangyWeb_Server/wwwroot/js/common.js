@@ -28,3 +28,11 @@ function ShowSweetAlert(title, message, type) {
         type
     );
 }
+
+function ShowDeleteConfirmationModal() {
+  $('#deleteConfirmationModal').modal('show');
+}
+
+function HideDeleteConfirmationModal() {
+  $('#deleteConfirmationModal').modal('hide');
+}
