@@ -37,44 +37,42 @@
 
   private CategoryDto Category { get; set; } = new();
   private string Title { get; set; } = "Create";
-  private bool IsLoading { get; set; } = true;
+  private bool IsLoading { get; set; }
 
-  protected override async Task OnInitializedAsync()
+  protected override async Task OnAfterRenderAsync(bool firstRender)
   {
-    // instead of making load categories function async and have it await here
-    // this will result in application to hold and wait for data
-    // instead we called Task.Run and provided the load categories function
-    // this will load the page but will load the categories behind the scenes
-    // and whenever the data is available it will show in the page
-    if (Id == 0)
+    if (firstRender)
     {
-      IsLoading = false;
-    }
-    else
-    {
-      Title = "Update";
-      await Task.Run(LoadCategory);
+      if (Id == 0)
+      {
+        IsLoading = false;
+      }
+      else
+      {
+        Title = "Update";
+        await LoadCategory();
+      }
     }
   }
 
-  // separate function for getting load categories
-  // this is not by default async and await
-  // as this will be added to backgroun operation
-  private void LoadCategory()
+  private async Task LoadCategory()
   {
-    Category = _categoryRepository.GetById(Id);
+    IsLoading = true;
+    StateHasChanged();
+    Category = await _categoryRepository.GetById(Id);
     IsLoading = false;
+    StateHasChanged();
   }
 
-  private void UpsertCategory()
+  private async Task UpsertCategory()
   {
     if (Category.Id == 0)
     {
-      _categoryRepository.Create(Category);
+      await _categoryRepository.Create(Category);
     }
     else
     {
-      _categoryRepository.Update(Category);
+      await _categoryRepository.Update(Category);
     }
 
     _navigationManager.NavigateTo("category");

@@ -54,26 +54,24 @@
 
 @code {
   private List<CategoryDto> Categories { get; set; } = new List<CategoryDto>();
-  private bool IsLoading { get; set; } = true;
+  private bool IsLoading { get; set; }
   private int DeleteCategoryId { get; set; } = 0;
 
-  protected override async Task OnInitializedAsync()
+  protected override async Task OnAfterRenderAsync(bool firstRender)
   {
-    // instead of making load categories function async and have it await here
-    // this will result in application to hold and wait for data
-    // instead we called Task.Run and provided the load categories function
-    // this will load the page but will load the categories behind the scenes
-    // and whenever the data is available it will show in the page
-    await Task.Run(LoadCategories);
+    if (firstRender)
+    {
+      await LoadCategories();
+    }
   }
 
-  // separate function for getting load categories
-  // this is not by default async and await
-  // as this will be added to backgroun operation
-  private void LoadCategories()
+  private async Task LoadCategories()
   {
-    Categories = _categoryRepository.GetAll();
+    IsLoading = true;
+    StateHasChanged();
+    Categories = await _categoryRepository.GetAll();
     IsLoading = false;
+    StateHasChanged();
   }
 
   private void HandleDelete(int id)
@@ -88,9 +86,9 @@
     if (isConfirmed && DeleteCategoryId != 0)
     {
       // delete
-      _categoryRepository.Delete(DeleteCategoryId);
-      LoadCategories();
-      _jsRuntime.InvokeVoidAsync("HideDeleteConfirmationModal");
+      await _categoryRepository.Delete(DeleteCategoryId);
+      await LoadCategories();
+      await _jsRuntime.InvokeVoidAsync("HideDeleteConfirmationModal");
     }
     IsLoading = false;
   }

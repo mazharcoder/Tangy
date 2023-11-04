@@ -4,9 +4,9 @@ namespace Tangy_Business.Repository.IRepository;
 
 public interface ICategoryRepository
 {
-  public CategoryDto Create(CategoryDto category);
-  public CategoryDto Update(CategoryDto category);
-  public int Delete(int id);
-  public CategoryDto GetById(int id);
-  public List<CategoryDto> GetAll();
+  public Task<CategoryDto> Create(CategoryDto category);
+  public Task<CategoryDto> Update(CategoryDto category);
+  public Task<int> Delete(int id);
+  public Task<CategoryDto> GetById(int id);
+  public Task<List<CategoryDto>> GetAll();
 }
